@@ -9,7 +9,7 @@ pub enum Hand {
     Scissors,
 }
 
-/// Returns a vector of games played. A game is a pair of hands. We play the left hand.
+/// Returns a vector of games played. A game is a pair of hands. We play the right hand.
 pub fn get() -> Vec<(Hand, Hand)> {
     vec![
         (Hand::Paper, Hand::Scissors),
