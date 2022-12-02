@@ -2,19 +2,19 @@ mod input;
 use input::Hand;
 
 fn main() {
-
-    let games = input::get();
+    let games = input::get_part1();
     let mut total: u32 = 0;
-
     for game in games {
         total += outcome_to_score(outcome(&game));
 
         total += hand_to_score(&game.1);
     }
     println!("Part 1: {:#?}", total);
+
+    let guide = input::get_part2();
 }
 
-enum Outcome {
+pub enum Outcome {
     Win,
     Draw,
     Loss,
@@ -36,7 +36,7 @@ fn outcome_to_score(outcome: Outcome) -> u32 {
     }
 }
 
-/// We are the right.
+/// We are the player on the right.
 fn outcome(game: &(Hand, Hand)) -> Outcome {
     match game {
         (Hand::Rock, Hand::Rock) => Outcome::Draw,
