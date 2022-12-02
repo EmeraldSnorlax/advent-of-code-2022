@@ -2,16 +2,39 @@ mod input;
 use input::Hand;
 
 fn main() {
-    let games = input::get_part1();
+    let mut games = input::get_part1();
+    let mut total = compute_score(&games);
+    println!("Part 1: {:#?}", total);
+
+    games = vec![];
+
+    let guide = input::get_part2();
+    // Convert the guide into what we need to throw, and store it back into games.
+    for game in guide {
+        match game {
+            // If it's a draw, they played the same move as the opponent.
+            (_, Outcome::Draw) => games.push((game.0, game.0)),
+
+            (Hand::Rock, Outcome::Win) => games.push((game.0, Hand::Paper)),
+            (Hand::Paper, Outcome::Win) => games.push((game.0, Hand::Scissors)),
+            (Hand::Scissors, Outcome::Win) => games.push((game.0, Hand::Rock)),
+
+            (Hand::Rock, Outcome::Loss) => games.push((game.0, Hand::Scissors)),
+            (Hand::Paper, Outcome::Loss) => games.push((game.0, Hand::Rock)),
+            (Hand::Scissors , Outcome::Loss) => games.push((game.0, Hand::Paper)),
+        }
+    }
+    total = compute_score(&games);
+    println!("Part 2: {:#?}", total);
+}
+
+fn compute_score(games: &Vec<(Hand, Hand)>) -> u32 {
     let mut total: u32 = 0;
     for game in games {
         total += outcome_to_score(outcome(&game));
-
         total += hand_to_score(&game.1);
     }
-    println!("Part 1: {:#?}", total);
-
-    let guide = input::get_part2();
+    total
 }
 
 pub enum Outcome {
