@@ -21,7 +21,7 @@ fn main() {
 
             (Hand::Rock, Outcome::Loss) => games.push((game.0, Hand::Scissors)),
             (Hand::Paper, Outcome::Loss) => games.push((game.0, Hand::Rock)),
-            (Hand::Scissors , Outcome::Loss) => games.push((game.0, Hand::Paper)),
+            (Hand::Scissors, Outcome::Loss) => games.push((game.0, Hand::Paper)),
         }
     }
     total = compute_score(&games);
