@@ -1,5 +1,7 @@
 // Once again, who needs file parsing when you can abuse regex and compile it in?
 /// What a person throws
+
+#[derive(Copy, Clone)]
 pub enum Hand {
     /// +1 pts to user.
     Rock,

@@ -2,6 +2,7 @@ mod input;
 use input::Hand;
 
 fn main() {
+
     let games = input::get();
     let mut total: u32 = 0;
 
@@ -10,7 +11,7 @@ fn main() {
 
         total += hand_to_score(&game.1);
     }
-    println!("{:#?}", total);
+    println!("Part 1: {:#?}", total);
 }
 
 enum Outcome {
