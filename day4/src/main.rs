@@ -1,25 +1,32 @@
 mod input;
 
 fn main() {
-    let mut total: u32 = 0;
+    let mut full_contains: u32 = 0;
+    let mut any_overlap: u32 = 0;
     for pair in input::get() {
         let wider = wider_range(&pair[0], &pair[1]);
         let narrower = if wider == &pair[0] { &pair[1] } else { &pair[0] };
         // println!("Wider: {:#?}", wider);
         // println!("Narrower: {:#?}", narrower);
-        if fully_contains(wider, narrower) { total += 1 }
+        if fully_contains(wider, narrower) { full_contains += 1 }
+
+        // Any overlap?
+        if narrower.to_owned().any(|z| wider.contains(&z)) { any_overlap += 1 };
+
     }
-    println!("Pairs where one fully contains the other: {:#?}", total);
+    println!("Pairs where one fully contains the other: {:#?}", full_contains);
+    println!("Pairs where there is any overlap: {:#?}", any_overlap);
 }
 
 
-/// Returns the wider range
+/// Returns the wider range. If they're equal, it doesn't matter and we return the right.
 fn wider_range<'a>(left_range: &'a std::ops::RangeInclusive<i32>, right_range: &'a std::ops::RangeInclusive<i32>) -> &'a std::ops::RangeInclusive<i32> {
     let left_length = left_range.clone().collect::<Vec<i32>>().len();
     let right_length = right_range.clone().collect::<Vec<i32>>().len();
     if  left_length > right_length { return left_range }
     else { return right_range }
 }
+
 /// Checks if the left can fully hold the right.
 fn fully_contains(base: &std::ops::RangeInclusive<i32>, check_if_inside: &std::ops::RangeInclusive<i32>) -> bool {
     for value in check_if_inside.clone() {
@@ -27,6 +34,8 @@ fn fully_contains(base: &std::ops::RangeInclusive<i32>, check_if_inside: &std::o
     }
     true
 }
+
+
 
 #[cfg(test)]
 mod tests {
